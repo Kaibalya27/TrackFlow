@@ -1,0 +1,15 @@
+# ===== Maven =====
+target/
+build/
+
+# ===== Eclipse / IDE =====
+.classpath
+.project
+.settings/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== Logs =====
+*.log

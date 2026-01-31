@@ -1,0 +1,392 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+h1, h2, h3 {
+    color: #444;
+    text-align: center;
+}
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+form {
+    width: 50%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"], input[type="number"], input[type="radio"] {
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="radio"] {
+    /* Reset styles */
+    margin: initial;
+    display: inline;
+}
+
+label {
+    font-weight: bold;
+}
+
+label[for="status"] {
+    /* Reset styles */
+    display: inline;
+    margin: initial;
+}
+
+/* Updated Header Styles */
+header {
+    display: flex;
+    justify-content: space-between; /* Logo left, title/nav right */
+    align-items: center;
+    background-color: #1a73e8; /* Updated color */
+    padding: 12px 24px; /* Slightly reduced padding */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+    color: white; /* Text color for header */
+}
+
+header nav a,
+header nav .nav-link,
+header nav form button.nav-link {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    padding: 8px 14px;
+    border: 1px solid white;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+/* Logo sizing and header title */
+.logo {
+    height: 48px;
+    width: auto;
+    margin-right: 12px;
+}
+
+header h1 {
+    margin: 0 12px 0 0;
+    font-size: 20px;
+    color: white;
+}
+
+/* Header nav layout and logout button styling */
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+header nav form {
+    display: inline-block;
+    margin: 0;
+}
+
+/* Specific override for header logout form so global form styles don't affect it */
+#logout-form {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    display: inline-block;
+    border: none;
+    height: 70px;
+    background-color: transparent;
+    
+}
+
+header nav form button {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+header nav form button:hover,
+header nav a:hover {
+    background: white;
+    color: #1a73e8;
+}
+
+header a:hover {
+    background-color: white; /* Invert colors on hover */
+    color: #1a73e8; /* Match hover text color with header background */
+}
+
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Styling for links as buttons */
+.btn-link {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+}
+
+.btn-link:hover {
+    background-color: #0056b3;
+}
+
+/* Centering the container for the links */
+.center-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+/* Centering the form and submit button */
+.container {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+button[type="submit"] {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Styling specific to User_result servlet */
+
+#user-result-container {
+    background-color: #f0f8ff; /* Light blue background */
+    border: 2px solid #1a73e8; /* Blue border */
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 60%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    text-align: center;
+}
+
+#user-result-container h1 {
+    color: #1a73e8;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+#user-result-container h2 {
+    color: #555;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+/* Professional Styling for the search player form in admin.jsp */
+.search-player-form {
+    width: 40%;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.search-player-form label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333333;
+}
+
+.search-player-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    color: #333333;
+}
+
+.search-player-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.search-player-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Professional Styling for the add player form in addPlayer.jsp */
+.add-player-form {
+    width: 40%;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.add-player-form label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333333;
+}
+
+/* Text/number inputs full-width; radios handled separately */
+.add-player-form input[type="text"], .add-player-form input[type="number"] {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    color: #333333;
+}
+
+/* Inline label utility and radio inline group */
+.label-inline {
+    display: inline-block;
+    margin-right: 12px;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.radio-inline {
+    display: inline-flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.radio-inline input[type="radio"] {
+    width: auto;
+    margin: 0 6px 0 0;
+}
+
+.add-player-form button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.add-player-form button:hover {
+    background-color: #218838;
+}
+
+/* Reapplied clean styling for radio buttons and labels */
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.radio-group input[type="radio"] {
+    margin: 0;
+}
+
+.radio-group label {
+    margin: 0;
+}

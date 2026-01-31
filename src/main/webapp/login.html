@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+		<img src="logo.png" alt="Logo" class="logo">
+		<h1>Paul's Badminton Team</h1>
+		<nav>
+			<a href="index.html">Home</a>
+			<a href="login.html">Admin</a>
+
+		</nav>
+		
+	</header>
+    <div class="container">
+        <h1>Admin Login</h1>
+        <form action="verify" method="post">
+            <table>
+                
+                <tr>
+                    <td>
+                        <label for="username" >Username:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="username" name="username" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="password">Password:</label>
+                    </td>
+                    <td>
+                        <input type="password" id="password" name="password" required>
+                    </td>
+                </tr>
+            </table>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    
+</body>
+</html>

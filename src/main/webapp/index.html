@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header>
+		<img src="logo.png" alt="Logo" class="logo">
+		<h1>Paul's Badminton Team</h1>
+		<nav>
+			<a href="index.html">Home</a>
+			<a href="login.html">Admin</a>
+
+		</nav>
+		
+	</header>
+	<div class="container">
+		<form action="user_result" method="post">
+			<table>
+				<tr>
+					<td>
+					<label for="name">Your name *</label>
+					</td>
+					<td>
+					<select id="name" required name="Id">
+						<option value="" disabled selected>Select your name</option>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="date">Select Date *</label>
+					</td>
+					<td>
+						<input type="date" required name="date">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="hours">You played today (Hrs) *</label>
+					</td>
+					<td>
+						<select id="hours" name="hours" required>
+							<option value="" disabled selected>Select hours</option>
+							<option value="0.5">0.5 hours</option>
+							<option value="1">1 hours</option>
+							<option value="1.5">1.5 hours</option>
+							<option value="2">2 hours</option>
+							<option value="2.5">2.5 hours</option>
+							<option value="3">3 hours</option>
+							<option value="3.5">3.5 hours</option>
+							<option value="4">4 hours</option>
+							<option value="4.5">4.5 hours</option>
+							<option value="5">5 hours</option>
+						</select>
+					</td>
+				</tr>
+				
+			</table>
+			<button type="submit">Submit</button>
+		</form>
+	</div>
+	<script src="script.js"></script>
+</body>
+</html>
