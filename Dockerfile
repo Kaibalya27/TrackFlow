@@ -8,18 +8,13 @@ RUN mvn clean package
 # -------- Runtime stage --------
 FROM tomcat:9.0-jdk17
 
-# Install envsubst
-RUN apt-get update && apt-get install -y gettext-base
-
-# Remove default apps
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy WAR
-COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
+# Copy custom server.xml
+COPY server.xml /usr/local/tomcat/conf/server.xml
 
-# Copy server.xml template
-COPY server.xml.template /usr/local/tomcat/conf/server.xml.template
+# Copy WAR as ROOT
+COPY --from=build /app/target/ROOT.war /usr/local/tomcat/webapps/ROOT.war
 
-# Generate server.xml at runtime and start Tomcat
-CMD envsubst < /usr/local/tomcat/conf/server.xml.template > /usr/local/tomcat/conf/server.xml \
-    && catalina.sh run
+EXPOSE 8080
+CMD ["catalina.sh", "run"]

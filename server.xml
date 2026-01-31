@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Server port="-1" shutdown="SHUTDOWN">
+  <Service name="Catalina">
+    <Connector
+        address="0.0.0.0"
+        port="8080"
+        protocol="org.apache.coyote.http11.Http11NioProtocol"
+        connectionTimeout="20000" />
+
+    <Engine name="Catalina" defaultHost="localhost">
+      <Host name="localhost" appBase="webapps"
+            unpackWARs="true" autoDeploy="true" />
+    </Engine>
+  </Service>
+</Server>
