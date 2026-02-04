@@ -30,18 +30,16 @@ async function players(){
 			}
 		}
 		
-		// Add event listener after players are loaded
-		if(name != null) {
-			name.addEventListener('change', function() {
-				showPlayerStatus(this.value);
-			});
-		}
 	}
 	catch(error){
 		alert(error+" \n reload the page");
 	}
 	
 }
+let name=document.querySelector("#name");
+name.addEventListener('change', function() {
+	showPlayerStatus(this.value);
+});
 
 function showPlayerStatus(playerId) {
 	if(playerId) {
