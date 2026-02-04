@@ -24,7 +24,7 @@
 					<label for="name">Your name *</label>
 					</td>
 					<td>
-					<select id="name" required name="Id" onchange="showPlayerStatus(this.value)">
+					<select id="name" required name="Id">
 						<option value="" disabled selected>Select your name</option>
 					</select>
 					</td>
@@ -67,15 +67,5 @@
 	<iframe id="resultFrame" style="display:none; width:100%; border:none; min-height:400px;"></iframe>
 	
 	<script src="script.js"></script>
-	<script>
-		function showPlayerStatus(playerId) {
-			if(playerId) {
-				document.getElementById('resultFrame').src = 'searchPlayer.jsp?Id=' + playerId;
-				document.getElementById('resultFrame').style.display = 'block';
-			} else {
-				document.getElementById('resultFrame').style.display = 'none';
-			}
-		}
-	</script>
 </body>
 </html>

@@ -29,10 +29,27 @@ async function players(){
 				name2.append(option2);
 			}
 		}
+		
+		// Add event listener after players are loaded
+		if(name != null) {
+			name.addEventListener('change', function() {
+				showPlayerStatus(this.value);
+			});
+		}
 	}
 	catch(error){
 		alert(error+" \n reload the page");
 	}
 	
 }
+
+function showPlayerStatus(playerId) {
+	if(playerId) {
+		document.getElementById('resultFrame').src = 'searchPlayer.jsp?Id=' + playerId;
+		document.getElementById('resultFrame').style.display = 'block';
+	} else {
+		document.getElementById('resultFrame').style.display = 'none';
+	}
+}
+
 players();
