@@ -1,5 +1,10 @@
 <%@ page import="com.servlet.database" %>
 <%@ page import="java.sql.*" %>
+<%
+    // Check if we're in a standalone context or included in admin.jsp
+    boolean isStandalone = request.getParameter("Id") != null && request.getAttribute("javax.servlet.include.request_uri") == null;
+%>
+<% if(isStandalone) { %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,11 +16,14 @@
     </style>
 </head>
 <body>
+<% } %>
 <% 
     try {
-        database db = new database();
+        // Always create our own database connection
+        database dbConnection = new database();
+        
         int playerId = Integer.parseInt(request.getParameter("Id"));
-        ResultSet rs = db.searchPlayer(playerId);
+        ResultSet rs = dbConnection.searchPlayer(playerId);
         
         if(rs.next()){
             int id = rs.getInt(1);
@@ -25,7 +33,7 @@
             String lastDate = rs.getString(5);
             double total_hours = rs.getDouble(6);
             
-            ResultSet rsPlayed = db.searchPlayerRecord(id);
+            ResultSet rsPlayed = dbConnection.searchPlayerRecord(id);
             double consumed = 0;
             while(rsPlayed.next()){
                 consumed += rsPlayed.getDouble(2);
@@ -56,7 +64,7 @@
                     <th>Hours Played</th>
                 </tr>
 <%
-            ResultSet rs1 = db.searchPlayerRecord(playerId);
+            ResultSet rs1 = dbConnection.searchPlayerRecord(playerId);
             while(rs1.next()){
                 String date = rs1.getString(1);
                 double hours = rs1.getDouble(2);
@@ -76,5 +84,7 @@
         out.println("<h3>Error loading player details: " + e.getMessage() + "</h3>");
     }
 %>
+<% if(isStandalone) { %>
 </body>
 </html>
+<% } %>
