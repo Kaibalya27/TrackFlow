@@ -26,7 +26,8 @@ public class database {
             + "FROM players p "
             + "LEFT JOIN payments pay ON p.id=pay.pid "
             + "LEFT JOIN (select pid,COALESCE(SUM(played_hours),0) AS played_hours from daily_record group by pid)d ON p.id=d.pid "
-            + "GROUP BY p.id";
+            + "GROUP BY p.id"
+            + " ORDER BY amount DESC";
         Statement st = con.createStatement();
         return st.executeQuery(query);
     }

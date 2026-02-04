@@ -32,13 +32,9 @@ async function players(){
 		
 		// Add event listener after players are loaded
 		if(name != null) {
-			console.log("Name element found:", name);
 			name.addEventListener('change', function() {
-				console.log("Change event fired! Selected ID:", this.value);
 				showPlayerStatus(this.value);
 			});
-		} else {
-			console.log("Name element is NULL!");
 		}
 	}
 	catch(error){
@@ -48,9 +44,7 @@ async function players(){
 }
 
 function showPlayerStatus(playerId) {
-	console.log("showPlayerStatus called with ID:", playerId);
 	if(playerId) {
-		console.log("Setting iframe src to: searchPlayer.jsp?Id=" + playerId);
 		document.getElementById('resultFrame').src = 'searchPlayer.jsp?Id=' + playerId;
 		document.getElementById('resultFrame').style.display = 'block';
 	} else {
