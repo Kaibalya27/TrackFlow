@@ -30,19 +30,27 @@ async function players(){
 			}
 		}
 		
+		// Add event listener after players are loaded
+		if(name != null) {
+			console.log("Name element found:", name);
+			name.addEventListener('change', function() {
+				console.log("Change event fired! Selected ID:", this.value);
+				showPlayerStatus(this.value);
+			});
+		} else {
+			console.log("Name element is NULL!");
+		}
 	}
 	catch(error){
 		alert(error+" \n reload the page");
 	}
 	
 }
-let name=document.querySelector("#name");
-name.addEventListener('change', function() {
-	showPlayerStatus(this.value);
-});
 
 function showPlayerStatus(playerId) {
+	console.log("showPlayerStatus called with ID:", playerId);
 	if(playerId) {
+		console.log("Setting iframe src to: searchPlayer.jsp?Id=" + playerId);
 		document.getElementById('resultFrame').src = 'searchPlayer.jsp?Id=' + playerId;
 		document.getElementById('resultFrame').style.display = 'block';
 	} else {
