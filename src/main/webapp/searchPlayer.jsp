@@ -9,6 +9,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player Status</title>
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -42,7 +43,7 @@
             boolean isAdmin = session.getAttribute("username") != null;
     %>
             <h2><%=playerName %>'s Details </h2>
-            <div style="display:flex;flex-direction: row;justify-content: space-evenly;">
+            <div class="player-details-grid" style="display:flex;flex-direction: row;justify-content: space-evenly;flex-wrap: wrap;gap: 10px;">
                 <h3>ID: <%=id %></h3>
                 <h3>Phone: <%=phone %></h3>
                 <h3>Amount: <%=amount %></h3>

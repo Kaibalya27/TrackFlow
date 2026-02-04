@@ -390,3 +390,245 @@ button[type="submit"]:hover {
 .radio-group label {
     margin: 0;
 }
+
+/* ============================================
+   RESPONSIVE MEDIA QUERIES
+   ============================================ */
+
+/* Tablet and below (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    /* Header adjustments */
+    header {
+        flex-direction: column;
+        padding: 10px 15px;
+        gap: 10px;
+    }
+    
+    header h1 {
+        font-size: 18px;
+        margin: 5px 0;
+        text-align: center;
+    }
+    
+    .logo {
+        height: 40px;
+        margin-right: 0;
+    }
+    
+    header nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+    
+    header nav a,
+    header nav .nav-link,
+    header nav form button.nav-link {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+    
+    #logout-form {
+        height: auto;
+    }
+    
+    /* Player details responsive */
+    .player-details-grid {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    
+    .player-details-grid h3 {
+        margin: 5px 0 !important;
+        font-size: 16px !important;
+    }
+    
+    /* Tables responsive */
+    table {
+        width: 95%;
+        font-size: 14px;
+    }
+    
+    table th, table td {
+        padding: 8px;
+    }
+    
+    /* Forms responsive */
+    form {
+        width: 85%;
+        padding: 15px;
+    }
+    
+    .search-player-form,
+    .add-player-form {
+        width: 85%;
+        padding: 15px;
+    }
+    
+    #user-result-container {
+        width: 90%;
+        padding: 15px;
+    }
+    
+    #user-result-container h1 {
+        font-size: 20px;
+    }
+    
+    #user-result-container h2 {
+        font-size: 16px;
+    }
+    
+    /* Buttons */
+    button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    .btn-link {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    /* Center links */
+    .center-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    /* Footer */
+    footer {
+        font-size: 14px;
+        padding: 8px 0;
+    }
+}
+
+/* Mobile phones (max-width: 480px) */
+@media screen and (max-width: 480px) {
+    /* Typography */
+    h1 {
+        font-size: 20px;
+    }
+    
+    h2 {
+        font-size: 18px;
+    }
+    
+    h3 {
+        font-size: 16px;
+    }
+    
+    /* Header even more compact */
+    header {
+        padding: 8px 10px;
+    }
+    
+    header h1 {
+        font-size: 16px;
+    }
+    
+    .logo {
+        height: 35px;
+    }
+    
+    header nav a,
+    header nav .nav-link,
+    header nav form button.nav-link {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+    
+    /* Tables - stack or scroll */
+    table {
+        width: 100%;
+        font-size: 12px;
+        display: block;
+        overflow-x: auto;
+    }
+    
+    table th, table td {
+        padding: 6px;
+        font-size: 12px;
+    }
+    
+    /* Forms full width on mobile */
+    form {
+        width: 95%;
+        padding: 12px;
+    }
+    
+    .search-player-form,
+    .add-player-form {
+        width: 95%;
+        padding: 12px;
+    }
+    
+    .search-player-form label,
+    .add-player-form label {
+        font-size: 14px;
+    }
+    
+    .search-player-form select,
+    .add-player-form input[type="text"],
+    .add-player-form input[type="number"] {
+        font-size: 14px;
+        padding: 8px;
+    }
+    
+    #user-result-container {
+        width: 95%;
+        padding: 12px;
+    }
+    
+    #user-result-container h1 {
+        font-size: 18px;
+    }
+    
+    #user-result-container h2 {
+        font-size: 14px;
+    }
+    
+    /* Inputs */
+    input[type="text"], input[type="number"] {
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    /* Buttons smaller */
+    button {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+    
+    .btn-link {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+    
+    button[type="submit"] {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    /* Footer */
+    footer {
+        font-size: 12px;
+        padding: 6px 0;
+        position: relative;
+    }
+    
+    /* Container adjustments */
+    .container {
+        padding: 10px;
+    }
+    
+    .center-links {
+        gap: 5px;
+    }
+    
+    /* Radio groups */
+    .radio-inline {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}

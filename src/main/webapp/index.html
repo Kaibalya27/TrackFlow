@@ -2,8 +2,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RTR Badminton Team - Home</title>
 <link rel="stylesheet" href="styles.css">
+<style>
+	body {
+		height: 100vh;
+		width: 100vw;
+		overflow: hidden;
+		margin: 0;
+		padding: 0;
+	}
+</style>
 </head>
 <body>
 	<header>
@@ -61,12 +71,13 @@
 			</table>
 			<button type="submit">Submit</button>
 		</form>
+		<!-- Player Status Display -->
+		<div style="max-width: 900px; width: 95%; margin: 20px auto;">
+			<iframe id="resultFrame" style="display:none; width:100%; min-height:300px;"></iframe>
+		</div>
 	</div>
 	
-	<!-- Player Status Display -->
-	<div style="max-width: 900px; margin: 20px auto;">
-		<iframe id="resultFrame" style="display:none; width:100%; border:1px solid #ddd; border-radius:8px; min-height:300px;"></iframe>
-	</div>
+	
 	
 	<script src="script.js"></script>
 </body>
