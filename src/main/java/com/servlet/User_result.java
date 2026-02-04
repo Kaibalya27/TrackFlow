@@ -28,7 +28,7 @@ public class User_result extends HttpServlet{
 		out.println("</head><body>");
 			out.println("<header>");
 			out.println("<img src='logo.png' alt='Logo' class='logo'>");
-			out.println("<h1>Paul's Badminton Team</h1>");
+			out.println("<h1>RTR Badminton Team</h1>");
 			out.println("<nav>");
 			out.println("<a href='index.html'>Home</a>");
 			out.println("<a href='login.html'>Admin</a>");
@@ -71,21 +71,21 @@ public class User_result extends HttpServlet{
 			}
 			    String query2 = "SELECT COALESCE(SUM(CASE WHEN pay.Status='IN' THEN pay.amount ELSE 0 END),0) AS amount,\n" +
 				    "COALESCE(SUM(CASE WHEN pay.Status='IN' THEN pay.Total_hours ELSE 0 END),0) AS Total_hours,\n" +
-				    "COALESCE(SUM(d.played_hours),0) AS played_hours\n" +
-				    "FROM players p\n" +
-				    "LEFT JOIN payments pay ON p.id = pay.pid\n" +
-				    "LEFT JOIN daily_record d ON p.id = d.pid\n" +
+		    "d.played_hours\n" +
+		    "FROM players p\n" +
+		    "LEFT JOIN payments pay ON p.id = pay.pid\n" +
+		    "LEFT JOIN (select pid,COALESCE(SUM(played_hours),0) AS played_hours from daily_record group by pid)d ON p.id = d.pid\n" +
 				    "WHERE p.id = ?\n" +
 				    "GROUP BY p.id";
 			PreparedStatement st1 = con.prepareStatement(query2);
 			st1.setInt(1, id);
 			ResultSet rs = st1.executeQuery();
 			int amount = 0;
-			int total_hours = 0;
+			double total_hours = 0;
 			double played_hours = 0.0;
 			if(rs.next()){
 				amount = rs.getInt(1);
-				total_hours = rs.getInt(2);
+				total_hours = rs.getDouble(2);
 				played_hours = rs.getDouble(3);
 			}
 			out.println("<h2>You paid: "+amount+ "</h2>");

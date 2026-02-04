@@ -6,15 +6,15 @@
         String phone=rs.getString(3);
         int amount=rs.getInt(4);
         String lastDate=rs.getString(5);
-        int total_hours=rs.getInt(6);
-        int played_hours=0; // will fetch below if needed
+        double total_hours=rs.getDouble(6);
+         double played_hours=0; // will fetch below if needed
         // compute consumed and remaining from daily_record
         ResultSet rsPlayed = db.searchPlayerRecord(id);
-        int consumed = 0;
+        double consumed = 0;
         while(rsPlayed.next()){
-            consumed += rsPlayed.getInt(2);
+            consumed += rsPlayed.getDouble(2);
         }
-        int remaining = total_hours - consumed;
+        double remaining = total_hours - consumed;
     %>
             <h2><%=playerName %>'s Details </h2>
             <div style="display:flex;flex-direction: row;justify-content: space-evenly;">
@@ -41,7 +41,7 @@
     ResultSet rs1=db.searchPlayerRecord(Integer.parseInt(request.getParameter("Id")));
     while(rs1.next()){
         String date=rs1.getString(1);
-        int hours=rs1.getInt(2);
+        double hours=rs1.getDouble(2);
 %>
         
         <tr>

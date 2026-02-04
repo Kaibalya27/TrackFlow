@@ -16,11 +16,9 @@
         String playerName=rs.getString(2);
         String phone=rs.getString(3);
         int amount=rs.getInt(4);
-        String lastDate=rs.getString(5);
-        int total_hours=rs.getInt(6);
-        String status = rs.getString(7);
-        int played_hours=rs.getInt(8);
-        int remaining = total_hours - played_hours;
+        double total_hours=rs.getDouble(5);
+        double played_hours=rs.getDouble(6);
+        double remaining = total_hours - played_hours;
 %>
         <tr>
             <td><%=id %></td>

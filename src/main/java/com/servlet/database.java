@@ -21,13 +21,11 @@ public class database {
     public ResultSet viewPlayers() throws Exception{
         String query = "SELECT p.id, p.name, p.phone_no, "
             + "COALESCE(SUM(CASE WHEN pay.Status='IN' THEN pay.amount ELSE 0 END),0) AS amount, "
-            + "(SELECT date FROM payments WHERE pid=p.id AND Status='IN' ORDER BY date DESC LIMIT 1) AS last_payment_date, "
             + "COALESCE(SUM(CASE WHEN pay.Status='IN' THEN pay.Total_hours ELSE 0 END),0) AS total_hours, "
-            + "(SELECT Status FROM payments WHERE pid=p.id ORDER BY date DESC LIMIT 1) AS status, "
-            + "COALESCE(SUM(d.played_hours),0) AS played_hours "
+            + "d.played_hours "
             + "FROM players p "
             + "LEFT JOIN payments pay ON p.id=pay.pid "
-            + "LEFT JOIN daily_record d ON p.id=d.pid "
+            + "LEFT JOIN (select pid,COALESCE(SUM(played_hours),0) AS played_hours from daily_record group by pid)d ON p.id=d.pid "
             + "GROUP BY p.id";
         Statement st = con.createStatement();
         return st.executeQuery(query);
@@ -85,9 +83,9 @@ public class database {
             if(hasAmount) pst.setInt(1, amount); else pst.setNull(1, java.sql.Types.INTEGER);
             pst.setString(2, status);
             if(status != null && "IN".equalsIgnoreCase(status) && hasAmount && amount > 0){
-                pst.setInt(3, amount/120);
+                pst.setDouble(3, amount/120.0);
             } else {
-                pst.setNull(3, java.sql.Types.INTEGER);
+                pst.setNull(3, java.sql.Types.DOUBLE);
             }
             if(hasPaymentMode) pst.setString(4, paymentMode); else pst.setNull(4, java.sql.Types.VARCHAR);
             if(hasDate){
@@ -107,15 +105,11 @@ public class database {
         return pst.executeQuery();
     }
 
-    // Record a payment (IN/OUT) for a player. This replaces updating amount/status on players.
-    // Accepts payment mode and optional date. If date is null/empty, server will use NOW().
     public int updateDetails(int id, String amountParam, String status, String paymentMode, String paymentDate) throws Exception{
-        // Parse amount internally; treat presence by nullity
         Integer amount = null;
         if(amountParam != null && !amountParam.trim().isEmpty()){
             try{ amount = Integer.parseInt(amountParam.trim()); } catch(NumberFormatException e){ amount = null; }
         }
-        // If nothing meaningful provided, do nothing
         boolean hasAmount = amount != null;
         boolean hasStatus = status != null && !status.trim().isEmpty();
         boolean hasPaymentMode = paymentMode != null && !paymentMode.trim().isEmpty();
@@ -134,10 +128,10 @@ public class database {
         pst.setString(3, status);
         // Only calculate and store Total_hours for IN payments when amount present and >0
         if(status != null && "IN".equalsIgnoreCase(status) && hasAmount && amount > 0) {
-            int totalHours = amount / 120;
-            pst.setInt(4, totalHours);
+            double totalHours = amount / 120.0;
+            pst.setDouble(4, totalHours);
         } else {
-            pst.setNull(4, java.sql.Types.INTEGER);
+            pst.setNull(4, java.sql.Types.DOUBLE);
         }
         // payment mode: keep NULL if not provided
         if(hasPaymentMode) pst.setString(5, paymentMode); else pst.setNull(5, java.sql.Types.VARCHAR);
@@ -179,9 +173,9 @@ public class database {
                 p2.setInt(2, amount);
                 p2.setString(3, status);
                 if(status != null && "IN".equalsIgnoreCase(status)){
-                    p2.setInt(4, amount/120);
+                    p2.setDouble(4, amount/120.0);
                 } else {
-                    p2.setNull(4, java.sql.Types.INTEGER);
+                    p2.setNull(4, java.sql.Types.DOUBLE);
                 }
                 p2.setString(5, paymentMode);
                 p2.setString(6, paymentDate);

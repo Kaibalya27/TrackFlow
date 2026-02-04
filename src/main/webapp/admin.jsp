@@ -11,7 +11,7 @@
 <body>
     <header>
 		<img src="logo.png" alt="Logo" class="logo">
-		<h1>Paul's Badminton Team</h1>
+		<h1>RTR Badminton Team</h1>
 		<nav>
 			<a href="index.html">Home</a>
             <form id="logout-form" method="post" action="logout">
