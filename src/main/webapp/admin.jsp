@@ -46,15 +46,15 @@
     <div class="financial-summary">
         <div class="summary-card">
             <h3>Total In</h3>
-            <p class="amount-in">₹<%=totalIn %></p>
+            <p class="amount-in">Rs. <%=totalIn %></p>
         </div>
         <div class="summary-card">
             <h3>Total Out</h3>
-            <p class="amount-out">₹<%=totalOut %></p>
+            <p class="amount-out">Rs. <%=totalOut %></p>
         </div>
         <div class="summary-card balance-card">
             <h3>Balance</h3>
-            <p class="amount-balance">₹<%=balance %></p>
+            <p class="amount-balance">Rs. <%=balance %></p>
         </div>
     </div>
     

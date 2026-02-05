@@ -513,7 +513,7 @@ button[type="submit"]:hover {
     
     /* Financial summary responsive */
     .financial-summary {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         gap: 15px;
     }
