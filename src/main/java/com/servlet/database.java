@@ -17,6 +17,16 @@ public class database {
         Class.forName("com.mysql.cj.jdbc.Driver");
         con=DriverManager.getConnection(url,user_name,password);
     }
+    
+    private double calculateHours(int amount) {
+        if (amount < 2400) {
+            return amount / 120.0;
+        } else if (amount < 3000) {
+            return 25 + (amount - 2400) / 120.0;
+        } else {
+            return 30 + (amount - 3000) / 120.0;
+        }
+    }
 
     public ResultSet viewPlayers() throws Exception{
         String query = "SELECT p.id, p.name, p.phone_no, "
@@ -46,58 +56,53 @@ public class database {
         return pst.executeQuery();
     }
 
-        // (removed) viewOutPlayers - replaced by viewTransactions.jsp which lists all payments
+    public ResultSet viewTransactions() throws Exception{
+        String query = "SELECT pay.id AS payment_id, p.id AS player_id, p.name, p.phone_no, "
+            + "pay.amount, pay.Status, pay.payment_mode, pay.Total_hours, pay.date "
+            + "FROM payments pay "
+            + "LEFT JOIN players p ON pay.pid = p.id "
+            + "ORDER BY pay.date DESC";
+        Statement st = con.createStatement();
+        return st.executeQuery(query);
+    }
 
-        // Return all payment transactions with player name and phone
-        public ResultSet viewTransactions() throws Exception{
-            String query = "SELECT pay.id AS payment_id, p.id AS player_id, p.name, p.phone_no, "
-                + "pay.amount, pay.Status, pay.payment_mode, pay.Total_hours, pay.date "
-                + "FROM payments pay "
-                + "LEFT JOIN players p ON pay.pid = p.id "
-                + "ORDER BY pay.date DESC";
-            Statement st = con.createStatement();
-            return st.executeQuery(query);
+    public ResultSet getPayment(int paymentId) throws Exception{
+        String q = "SELECT id, pid, amount, Status, payment_mode, Total_hours, date FROM payments WHERE id = ?";
+        PreparedStatement pst = con.prepareStatement(q);
+        pst.setInt(1, paymentId);
+        return pst.executeQuery();
+    }
+
+    public int updatePayment(int paymentId, String amountParam, String status, String paymentMode, String paymentDate) throws Exception{
+        Integer amount = null;
+        if(amountParam != null && !amountParam.trim().isEmpty()){
+            try{ amount = Integer.parseInt(amountParam.trim()); } catch(NumberFormatException e){ amount = null; }
         }
 
-        // Return a single payment record by payment id
-        public ResultSet getPayment(int paymentId) throws Exception{
-            String q = "SELECT id, pid, amount, Status, payment_mode, Total_hours, date FROM payments WHERE id = ?";
-            PreparedStatement pst = con.prepareStatement(q);
-            pst.setInt(1, paymentId);
-            return pst.executeQuery();
+        boolean hasAmount = amount != null;
+        boolean hasStatus = status != null && !status.trim().isEmpty();
+        boolean hasPaymentMode = paymentMode != null && !paymentMode.trim().isEmpty();
+        boolean hasDate = paymentDate != null && !paymentDate.trim().isEmpty();
+
+        String query = "UPDATE payments SET amount = ?, Status = ?, Total_hours = ?, payment_mode = ?, date = ? WHERE id = ?";
+        PreparedStatement pst = con.prepareStatement(query);
+        if(hasAmount) pst.setInt(1, amount); else pst.setNull(1, java.sql.Types.INTEGER);
+        pst.setString(2, status);
+        if(status != null && "IN".equalsIgnoreCase(status) && hasAmount && amount > 0){
+            pst.setDouble(3, calculateHours(amount));
+        } else {
+            pst.setNull(3, java.sql.Types.DOUBLE);
         }
-
-        // Update an existing payment record. All fields are optional; amountParam is parsed here.
-        public int updatePayment(int paymentId, String amountParam, String status, String paymentMode, String paymentDate) throws Exception{
-            Integer amount = null;
-            if(amountParam != null && !amountParam.trim().isEmpty()){
-                try{ amount = Integer.parseInt(amountParam.trim()); } catch(NumberFormatException e){ amount = null; }
-            }
-
-            boolean hasAmount = amount != null;
-            boolean hasStatus = status != null && !status.trim().isEmpty();
-            boolean hasPaymentMode = paymentMode != null && !paymentMode.trim().isEmpty();
-            boolean hasDate = paymentDate != null && !paymentDate.trim().isEmpty();
-
-            String query = "UPDATE payments SET amount = ?, Status = ?, Total_hours = ?, payment_mode = ?, date = ? WHERE id = ?";
-            PreparedStatement pst = con.prepareStatement(query);
-            if(hasAmount) pst.setInt(1, amount); else pst.setNull(1, java.sql.Types.INTEGER);
-            pst.setString(2, status);
-            if(status != null && "IN".equalsIgnoreCase(status) && hasAmount && amount > 0){
-                pst.setDouble(3, amount/120.0);
-            } else {
-                pst.setNull(3, java.sql.Types.DOUBLE);
-            }
-            if(hasPaymentMode) pst.setString(4, paymentMode); else pst.setNull(4, java.sql.Types.VARCHAR);
-            if(hasDate){
-                String dateOnly = paymentDate.contains(" ") ? paymentDate.split(" ")[0] : paymentDate;
-                pst.setDate(5, java.sql.Date.valueOf(dateOnly));
-            } else {
-                pst.setNull(5, java.sql.Types.DATE);
-            }
-            pst.setInt(6, paymentId);
-            return pst.executeUpdate();
+        if(hasPaymentMode) pst.setString(4, paymentMode); else pst.setNull(4, java.sql.Types.VARCHAR);
+        if(hasDate){
+            String dateOnly = paymentDate.contains(" ") ? paymentDate.split(" ")[0] : paymentDate;
+            pst.setDate(5, java.sql.Date.valueOf(dateOnly));
+        } else {
+            pst.setNull(5, java.sql.Types.DATE);
         }
+        pst.setInt(6, paymentId);
+        return pst.executeUpdate();
+    }
     
     public ResultSet searchPlayerRecord(int id) throws Exception{
         String query="select date, played_hours from daily_record where pid=?";
@@ -129,8 +134,7 @@ public class database {
         pst.setString(3, status);
         // Only calculate and store Total_hours for IN payments when amount present and >0
         if(status != null && "IN".equalsIgnoreCase(status) && hasAmount && amount > 0) {
-            double totalHours = amount / 120.0;
-            pst.setDouble(4, totalHours);
+            pst.setDouble(4, calculateHours(amount));
         } else {
             pst.setNull(4, java.sql.Types.DOUBLE);
         }
@@ -174,7 +178,7 @@ public class database {
                 p2.setInt(2, amount);
                 p2.setString(3, status);
                 if(status != null && "IN".equalsIgnoreCase(status)){
-                    p2.setDouble(4, amount/120.0);
+                    p2.setDouble(4, calculateHours(amount));
                 } else {
                     p2.setNull(4, java.sql.Types.DOUBLE);
                 }
@@ -185,4 +189,17 @@ public class database {
         }
         return res;
     }
+
+    public ResultSet In() throws Exception{
+        String query = "SELECT sum(amount) FROM payments WHERE Status='IN'";
+        Statement st = con.createStatement();
+        return st.executeQuery(query);
+    }
+    
+    public ResultSet Out() throws Exception{
+        String query = "SELECT sum(amount) FROM payments WHERE Status='OUT'";
+        Statement st = con.createStatement();
+        return st.executeQuery(query);
+    }
+
 }

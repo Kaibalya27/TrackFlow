@@ -30,6 +30,38 @@
     String name=(String)session.getAttribute("username");
     %>
     <h1><%=name %> </h1>
+    
+    <%
+        // Initialize database connection early for summary
+        database db = null;
+        try {
+            db = new database();
+            ResultSet rsIn = db.In(); 
+            ResultSet rsOut = db.Out();
+            int totalIn = rsIn.next() ? rsIn.getInt(1) : 0;
+            int totalOut = rsOut.next() ? rsOut.getInt(1) : 0;
+            int balance = totalIn - totalOut;
+    %>
+    
+    <div class="financial-summary">
+        <div class="summary-card">
+            <h3>Total In</h3>
+            <p class="amount-in">₹<%=totalIn %></p>
+        </div>
+        <div class="summary-card">
+            <h3>Total Out</h3>
+            <p class="amount-out">₹<%=totalOut %></p>
+        </div>
+        <div class="summary-card balance-card">
+            <h3>Balance</h3>
+            <p class="amount-balance">₹<%=balance %></p>
+        </div>
+    </div>
+    
+    <% } catch(Exception e) { %>
+        <p>Error loading financial summary</p>
+    <% } %>
+    
     <div class="center-links">
         <a href="admin.jsp?action=viewPlayers" class="btn-link">View Players</a>
         <a href="admin.jsp?action=viewTransactions" class="btn-link">View Transactions</a>
@@ -46,10 +78,12 @@
     
 
     <% 
-        
         String action=(String)request.getParameter("action");
         try{
-            database db=new database();
+            // Reuse db if already initialized, otherwise create new
+            if(db == null) {
+                db = new database();
+            }
                 if(action != null && action.equals("viewPlayers")){
             %>
                 <%@ include file="viewPlayers.jsp" %>
