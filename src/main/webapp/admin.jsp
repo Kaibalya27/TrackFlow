@@ -45,15 +45,15 @@
     
     <div class="financial-summary">
         <div class="summary-card">
-            <h3 style="color:white">Total In</h3>
+            <h3 style="color:white">Inflow</h3>
             <p class="amount-in">Rs. <%=totalIn %></p>
         </div>
         <div class="summary-card">
-            <h3 style="color:white">Total Out</h3>
+            <h3 style="color:white">Outflow</h3>
             <p class="amount-out">Rs. <%=totalOut %></p>
         </div>
         <div class="summary-card balance-card">
-            <h3 style="color:white">Balance</h3>
+            <h3 style="color:white">Cashflow</h3>
             <p class="amount-balance">Rs. <%=balance %></p>
         </div>
     </div>
