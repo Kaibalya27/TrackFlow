@@ -191,13 +191,13 @@ public class database {
     }
 
     public ResultSet In() throws Exception{
-        String query = "SELECT sum(amount) FROM payments WHERE Status='IN' WHERE payment_mode != 'Carry forward'";
+        String query = "SELECT sum(amount) FROM payments WHERE Status='IN' and payment_mode != 'Carry forward'";
         Statement st = con.createStatement();
         return st.executeQuery(query);
     }
     
     public ResultSet Out() throws Exception{
-        String query = "SELECT sum(amount) FROM payments WHERE Status='OUT' WHERE payment_mode != 'Carry forward'";
+        String query = "SELECT sum(amount) FROM payments WHERE Status='OUT' and payment_mode != 'Carry forward'";
         Statement st = con.createStatement();
         return st.executeQuery(query);
     }
