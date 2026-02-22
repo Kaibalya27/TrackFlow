@@ -1,3 +1,6 @@
+<div style="text-align: center;">
+<a href="downloadTransactions" >Download</a>
+</div>
 <table>
     <tr>
         <th>Payment ID</th>

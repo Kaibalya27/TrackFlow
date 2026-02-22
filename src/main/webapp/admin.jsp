@@ -1,5 +1,7 @@
 <%@ page import="com.servlet.database" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.net.URLEncoder" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

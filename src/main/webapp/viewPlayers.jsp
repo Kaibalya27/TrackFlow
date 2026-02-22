@@ -1,3 +1,6 @@
+<div style="text-align: center;">
+<a href="downloadPlayers" >Download</a>
+</div>
 <table>
         <tr>
             <th>ID</th>
@@ -8,6 +11,8 @@
             <th>Played Hours</th>
             <th>Remaining Hours</th>
             <th>Actions</th>
+            <th>Whatsapp</th>
+            <th>View</th>
         </tr>
 <%  
     ResultSet rs=db.viewPlayers();
@@ -19,6 +24,13 @@
         double total_hours=rs.getDouble(5);
         double played_hours=rs.getDouble(6);
         double remaining = total_hours - played_hours;
+        
+        String encodedMessage = URLEncoder.encode(
+            "Hello " + playerName + ", your remaining hours are " + remaining,
+            "UTF-8"
+        );
+
+        String whatsappUrl = "https://wa.me/" + phone + "?text=" + encodedMessage;
 %>
         <tr>
             <td><%=id %></td>
@@ -32,6 +44,8 @@
             <form action="delete.jsp" method="post">
             <td><button type="submit" name="delete" value="<%=id%>">delete</button></td>
             </form>
+            <td><a href="<%=whatsappUrl%>" target="_blank">Send</a></td>
+            <td><a href="admin.jsp?Id=<%=id%>&action=SearchPlayer">View</a></td>
         </tr>
         
 <%

@@ -103,7 +103,11 @@ public class User_result extends HttpServlet{
 			out.println("<h1>"+e+" resubmit</h1>");
 		}
 
+		
 		out.println("</div>"); // Close the container div
+		out.println("<script>");
+		out.println("setTimeout(function(){ window.location.href = 'index.html'; }, 3000);");
+		out.println("</script>");
 		out.println("</body></html>");
 	}
 }

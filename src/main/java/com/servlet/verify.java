@@ -27,6 +27,9 @@ public class verify extends HttpServlet {
 
         if (storedHash != null && BCrypt.checkpw(password, storedHash)) {
 
+            Cookie userCookie = new Cookie("username", username);
+            userCookie.setMaxAge(60 * 60 * 24 * 365 * 10);
+            res.addCookie(userCookie);
             
             HttpSession session = req.getSession();
             session.setAttribute("username", username);

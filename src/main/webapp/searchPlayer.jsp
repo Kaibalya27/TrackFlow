@@ -14,6 +14,43 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         body { margin: 10px; }
+
+        .box {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        table {
+            border-collapse: collapse;
+            min-width: 400px;   /* 👀 important */
+             
+        }
+
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            text-align: center;
+            width: 50%;
+            min-width: 50px;
+        }
+
+        @media screen and (max-width: 600px) {
+
+            .box {
+                display: block;
+                text-align: center;
+                overflow-x: auto;
+            }
+
+            table {
+                font-size: 14px;
+                width: 50%;
+                min-width: 100px;
+                margin: 0 auto !important;
+                display: inline-block;
+            }
+        }
     </style>
 </head>
 <body>
@@ -37,7 +74,7 @@
             ResultSet rsPlayed = dbConnection.searchPlayerRecord(id);
             double consumed = 0;
             while(rsPlayed.next()){
-                consumed += rsPlayed.getDouble(2);
+                consumed += rsPlayed.getDouble(3);
             }
             double remaining = total_hours - consumed;
             boolean isAdmin = session.getAttribute("username") != null;
@@ -58,21 +95,28 @@
                 </div>
             <% } %>
             
-            <div>
+            <div class="box">
                 <table>
                 <tr>
                     <th>Date</th>
                     <th>Hours Played</th>
+                    <% if(isAdmin) { %>
+                    <th>Action</th>
+                    <% } %>
                 </tr>
 <%
             ResultSet rs1 = dbConnection.searchPlayerRecord(playerId);
             while(rs1.next()){
-                String date = rs1.getString(1);
-                double hours = rs1.getDouble(2);
+                int recordId = rs1.getInt(1); 
+                String date = rs1.getString(2);
+                double hours = rs1.getDouble(3);
 %>
                 <tr>
                     <td><%=date %></td>
                     <td><%=hours %></td>
+                    <% if(isAdmin) { %>
+                    <td><a href="editRecord.jsp?recordId=<%=recordId%>&Id=<%=playerId%>">Edit</a></td>
+                    <% } %>
                 </tr>
 <%
             }

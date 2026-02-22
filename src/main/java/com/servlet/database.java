@@ -3,11 +3,11 @@ package com.servlet;
 import java.sql.*;
 
 public class database {
-    private final String host = System.getenv("MYSQLHOST");
-    private final String port = System.getenv("MYSQLPORT");
-    private final String db   = System.getenv("MYSQLDATABASE");
-    private final String user_name = System.getenv("MYSQLUSER");
-    private final String password = System.getenv("MYSQLPASSWORD");
+   private final String host = System.getenv("MYSQLHOST");
+   private final String port = System.getenv("MYSQLPORT");
+   private final String db   = System.getenv("MYSQLDATABASE");
+   private final String user_name = System.getenv("MYSQLUSER");
+   private final String password = System.getenv("MYSQLPASSWORD");
     private final String url = "jdbc:mysql://" + host + ":" + port + "/" + db
            + "?useSSL=false&allowPublicKeyRetrieval=true";
 
@@ -105,12 +105,24 @@ public class database {
     }
     
     public ResultSet searchPlayerRecord(int id) throws Exception{
-        String query="select date, played_hours from daily_record where pid=?";
+        String query="select id, date, played_hours from daily_record where pid=?";
         PreparedStatement pst=con.prepareStatement(query);
         pst.setInt(1, id);
         return pst.executeQuery();
     }
 
+    public int updatePlayedHours(int recordId, String hoursStr) throws Exception{
+        double hours = 0;
+        if(hoursStr != null && !hoursStr.trim().isEmpty()){
+            try{ hours = Double.parseDouble(hoursStr.trim()); } catch(NumberFormatException e){ hours = 0; }
+        }
+        String query = "UPDATE daily_record SET played_hours = ? WHERE id = ?";
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.setDouble(1, hours);
+        pst.setInt(2, recordId);
+        return pst.executeUpdate();
+    }
+    
     public int updateDetails(int id, String amountParam, String status, String paymentMode, String paymentDate) throws Exception{
         Integer amount = null;
         if(amountParam != null && !amountParam.trim().isEmpty()){

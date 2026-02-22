@@ -1,3 +1,15 @@
+// Function to get cookie value by name
+function getCookie(name) {
+	let cookies = document.cookie.split('; ');
+	for(let cookie of cookies) {
+		let [key, value] = cookie.split('=');
+		if(key === name) {
+			return decodeURIComponent(value);
+		}
+	}
+	return null;
+}
+
 async function players(){
 	try{
 		let result=await fetch("players");
@@ -33,8 +45,16 @@ async function players(){
 		// Add event listener after players are loaded
 		if(name != null) {
 			name.addEventListener('change', function() {
+				document.cookie = "selectedPlayerId=" + this.value + "; path=/; max-age=" + 60*60*24*365*10; 
 				showPlayerStatus(this.value);
 			});
+			
+			// Auto-select saved player from cookie
+			let savedPlayerId = getCookie('selectedPlayerId');
+			if(savedPlayerId) {
+				name.value = savedPlayerId;
+				showPlayerStatus(savedPlayerId);
+			}
 		}
 	}
 	catch(error){
