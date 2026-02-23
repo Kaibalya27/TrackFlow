@@ -30,7 +30,7 @@
             "You Paid " + amount + " for " + total_hours + " Hrs\n" +
             "Played: " + played_hours + " Hrs\n" +
             "Balance: " + remaining + " Hrs\n" +
-            "Update the playing hours using the link https://trackflow-flax.onrender.com/index.html",
+            "Update the playing hours using the link https://trackflow-flax.onrender.com",
             "UTF-8"
         );
 
