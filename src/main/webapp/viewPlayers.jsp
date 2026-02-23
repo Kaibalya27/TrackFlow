@@ -26,7 +26,11 @@
         double remaining = total_hours - played_hours;
         
         String encodedMessage = URLEncoder.encode(
-            "Hello " + playerName + ", your remaining hours are " + remaining,
+            "Hi " + playerName + "\n" +
+            "You Paid " + amount + " for " + total_hours + " Hrs\n" +
+            "Played: " + played_hours + " Hrs\n" +
+            "Balance: " + remaining + " Hrs\n" +
+            "Update the playing hours using the link https://trackflow-flax.onrender.com/index.html",
             "UTF-8"
         );
 
